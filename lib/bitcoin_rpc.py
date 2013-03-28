@@ -51,7 +51,7 @@ class BitcoinRPC(object):
     
     @defer.inlineCallbacks
     def getblocktemplate(self):
-        resp = (yield self._call('getblocktemplate', []))
+        resp = (yield self._call('getblocktemplate', [{}]))
         defer.returnValue(json.loads(resp)['result'])
                                                   
     @defer.inlineCallbacks
