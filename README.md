@@ -11,6 +11,8 @@ For Stratum mining protocol specification, please visit http://mining.bitcoin.cz
 
 This fork is still a work in progress - once complete, full details will be posted and a link will be shared.
 
+This fork should support bitcoin and most alt-coins including crypt-based coins like litecoin. After that is the main reason it is being forked
+
 Contact:
 -------
 This pool implementation is provided by http://www.viperausmedia.com.au. You can contact
