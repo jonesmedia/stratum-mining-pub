@@ -137,7 +137,9 @@ class TemplateRegistry(object):
     
     def diff_to_target(self, difficulty):
         '''Converts difficulty to target'''
-        diff1 = 0x00000000ffff0000000000000000000000000000000000000000000000000000 
+        '''diff1 = 0x00000000ffff0000000000000000000000000000000000000000000000000000 '''
+        '''I need help here - is this correct?'''
+           diff1 = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0f0000
         return diff1 / difficulty
     
     def get_job(self, job_id):
