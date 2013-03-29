@@ -21,5 +21,4 @@ me by email info(at)viperausmedia.com.au.
 Donations:
 ----------
 BTC - 1CWmoy4xTSXV8NmiFtz2aCHWfy1ikzaBTM
-
 LTC - LVWjBYNgj9MFPMhm5bMq3tjRCKiKVzMeL1
