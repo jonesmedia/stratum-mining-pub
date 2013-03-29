@@ -46,10 +46,10 @@ LISTEN_WSS_TRANSPORT = None
 
 # Hostname and credentials for one trusted Bitcoin node ("Satoshi's client").
 # Stratum uses both P2P port (which is 8333 already) and RPC port
-BITCOIN_TRUSTED_HOST = 'localhost'
-BITCOIN_TRUSTED_PORT = 8332
-BITCOIN_TRUSTED_USER = 'user'
-BITCOIN_TRUSTED_PASSWORD = 'somepassword'
+LITECOIN_TRUSTED_HOST = 'localhost'
+LITECOIN_TRUSTED_PORT = 8332
+LITECOIN_TRUSTED_USER = 'user'
+LITECOIN_TRUSTED_PASSWORD = 'somepassword'
 
 # Use "echo -n '<yourpassword>' | sha256sum | cut -f1 -d' ' "
 # for calculating SHA256 of your preferred password
