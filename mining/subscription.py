@@ -38,7 +38,7 @@ class MiningSubscription(Subscription):
         
         # Force set higher difficulty
         # TODO
-        #self.connection_ref().rpc('mining.set_difficulty', [2,], is_notification=True)
+        self.connection_ref().rpc('mining.set_difficulty', [16,], is_notification=True)
         #self.connection_ref().rpc('client.get_version', [])
         
         # Force client to remove previous jobs if any (eg. from previous connection)
