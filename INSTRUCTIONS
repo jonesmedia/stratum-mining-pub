@@ -1,0 +1,35 @@
+Installation Instructions - WORK IN PROGRESS
+
+Requirements:
+python 2.6 or 2.7
+litecoind
+linux-based system (should work on Mac OS too, not tested)
+
+#Ensure litecoind is installed and running
+litecoind getinfo {for example}
+
+#create installation directory
+mkdir /home/{USERNAME}/slush0
+cd ~/slush0
+
+
+Not sure if this part is required...
+a) From GIT, for developers
+git clone git://github.com/slush0/stratum.git 
+sudo apt-get install python-dev
+sudo python setup.py develop
+
+Pretty sure you do this...
+b) From package, permanent install for production use
+sudo apt-get install python-dev
+sudo apt-get install python-setuptools
+sudo easy_install stratum
+
+
+Startup
+=======
+Start devel server:
+twistd -ny launcher_demo.tac
+
+Devel server *without* lowlevel messages of Twisted:
+twistd -ny launcher_demo.tac -l log/twistd.log
