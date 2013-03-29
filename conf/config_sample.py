@@ -68,15 +68,15 @@ IRC_NICK = None
 #DATABASE_DRIVER = 'MySQLdb'
 #DATABASE_HOST = 'localhost'
 #DATABASE_DBNAME = 'pooldb'
-#DATABASE_USER = 'pooldb'
+#DATABASE_USER = 'dbuser'
 #DATABASE_PASSWORD = '**empty**'
 
 
 # Pool related settings
-# to get central_wallet address: litecoind getdefaultaddress ""
+# to get central_wallet address: bitcoind/litecoind getaccountaddress ""
 
 INSTANCE_ID = 31
-CENTRAL_WALLET = 'set_valid_addresss_in_config!'
+CENTRAL_WALLET = 'Your_Valid_Bitcoin_or_Litecoin_Address'
 PREVHASH_REFRESH_INTERVAL = 5 # in sec
 MERKLE_REFRESH_INTERVAL = 60 # How often check memorypool
 COINBASE_EXTRAS = '/stratum/'
