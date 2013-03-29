@@ -6,26 +6,30 @@ Please rename it to settings.py and fill correct values.
 # ******************** GENERAL SETTINGS ***************
 
 # Enable some verbose debug (logging requests and responses).
-DEBUG = False
+# Turn this off once ready to go live  -  True|False
+DEBUG = True
 
 # Destination for application logs, files rotated once per day.
+# log in current directory - ensure log directory exists
 LOGDIR = 'log/'
 
 # Main application log file.
-LOGFILE = None#'stratum.log'
+LOGFILE = 'stratum.log'
 
 # Possible values: DEBUG, INFO, WARNING, ERROR, CRITICAL
-LOGLEVEL = 'INFO'
+# Turn this to INFO once ready to go live
+LOGLEVEL = 'DEBUG'
 
 # How many threads use for synchronous methods (services).
 # 30 is enough for small installation, for real usage
 # it should be slightly more, say 100-300.
-THREAD_POOL_SIZE = 10
+THREAD_POOL_SIZE = 200
 
+
+#Not sure what this is.. lol
 ENABLE_EXAMPLE_SERVICE = True
 
 # ******************** TRANSPORTS *********************
-
 # Hostname or external IP to expose
 HOSTNAME = 'localhost'
 
@@ -46,6 +50,7 @@ LISTEN_WSS_TRANSPORT = None
 
 # Hostname and credentials for one trusted Bitcoin node ("Satoshi's client").
 # Stratum uses both P2P port (which is 8333 already) and RPC port
+#update this information - user/password from ~/.litecoin/litecoin.conf
 LITECOIN_TRUSTED_HOST = 'localhost'
 LITECOIN_TRUSTED_PORT = 8332
 LITECOIN_TRUSTED_USER = 'user'
@@ -58,15 +63,18 @@ ADMIN_PASSWORD_SHA256 = None
 
 IRC_NICK = None
 
-'''
-DATABASE_DRIVER = 'MySQLdb'
-DATABASE_HOST = 'localhost'
-DATABASE_DBNAME = 'pooldb'
-DATABASE_USER = 'pooldb'
-DATABASE_PASSWORD = '**empty**'
-'''
+#Insert MYSQL connection details
+
+#DATABASE_DRIVER = 'MySQLdb'
+#DATABASE_HOST = 'localhost'
+#DATABASE_DBNAME = 'pooldb'
+#DATABASE_USER = 'pooldb'
+#DATABASE_PASSWORD = '**empty**'
+
 
 # Pool related settings
+# to get central_wallet address: litecoind getdefaultaddress ""
+
 INSTANCE_ID = 31
 CENTRAL_WALLET = 'set_valid_addresss_in_config!'
 PREVHASH_REFRESH_INTERVAL = 5 # in sec
