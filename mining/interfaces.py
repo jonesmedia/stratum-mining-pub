@@ -44,27 +44,27 @@ class ShareManagerInterface(object):
     
     def on_submit_share(self, worker_name, block_header, block_hash, shares, timestamp, is_valid):
         log.info("%s %s %s" % (block_hash, 'valid' if is_valid else 'INVALID', worker_name))
-        con = mdb.connect('localhost', '<username>', '<password>', '<db name>');
-        cur = con.cursor()
-        try:
-           cur.execute("""INSERT INTO shares (username, our_result, rem_host, solution, block_hash, block_header) VALUES ("%s","%s", " ", " ", "%s", "%s")""" % (worker_name, 'Y' if is_valid else 'N', block_hash, block_header))
-           con.commit()
-        except:
-           con.rollback()
-        cur.close()
-	     con.close()
+	con = mdb.connect('localhost', '<username>', '<password>', '<db name>');
+	cur = con.cursor()
+	try:
+		cur.execute("""INSERT INTO shares (username, our_result, rem_host, solution, block_hash, block_header) VALUES ("%s","%s", " ", " ", "%s", "%s")""" % (worker_name, 'Y' if is_valid else 'N', block_hash, block_header))
+		con.commit()
+	except:
+		con.rollback()
+	cur.close()
+	con.close()
     
     def on_submit_block(self, is_accepted, worker_name, block_header, block_hash, timestamp):
         log.info("Block %s %s" % (block_hash, 'ACCEPTED' if is_accepted else 'REJECTED'))
-        con = mbd.connect('localhost', '<username>', '<password>', '<db name>');
-	     cur = con.cursor()
-	     try:
-		     cur.execute("""UPDATE shares SET upstream_result = "%s" WHERE block_hash = "%s" """ % ('Y' if is_accepted else 'N', block_hash))
-		     con.commit()
-   	  except:
-   		  con.rollback()
-	     cur.close()
-	     con.close()
+	con = mbd.connect('localhost', '<username>', '<password>', '<db name>');
+	cur = con.cursor()
+	try:
+		cur.execute("""UPDATE shares SET upstream_result = "%s" WHERE block_hash = "%s" """ % ('Y' if is_accepted else 'N', block_hash))
+		con.commit()
+	except:
+		con.rollback()
+	cur.close()
+	con.close()
     
 class TimestamperInterface(object):
     '''This is the only source for current time in the application.
