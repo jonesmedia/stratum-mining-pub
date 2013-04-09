@@ -11,6 +11,11 @@ For Stratum mining protocol specification, please visit http://mining.bitcoin.cz
 
 This fork is still a work in progress - once complete, full details will be posted and a link will be shared.
 
+
+NOTE: ^ - currently it appears that shares are not being pushed back to litecoind and therefore are not being validated. 
+If you wish to help improve/debug this, please feel free to contact me at the address below.
+
+
 This fork should support bitcoin and most alt-coins including scrypt-based coins like litecoin.
 
 Contact:
