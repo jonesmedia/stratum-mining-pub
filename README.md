@@ -28,6 +28,11 @@ So ive put some logging lines into the code to work out what is going on and i t
 
 Thats our problem right there... hash_int !<= job.target and therefore not submitting... so job.target is not right im guessing
 
+Update:
+To help, please see the extract from the stratum log:
+http://pastebin.com/Jk2wZ9a6
+To get extra information, I have changed 'hash_int <= job.target'  to 'hash_int >= job.target'
+
 
 Contact:
 -------
