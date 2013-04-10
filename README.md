@@ -23,6 +23,7 @@ Current issue details:
 So ive put some logging lines into the code to work out what is going on and i think i have narrowed it down to the following
 
 2013-04-09 21:13:43,948 INFO template_registry template_registry.submit_share # Job Target: 114990879509129085127507265365841254673886324032102872501331165184
+
 2013-04-09 21:13:43,948 INFO template_registry template_registry.submit_share # Hash_int: 89220399313991226919392322697890206382314560561523522085963210361529183705087
 
 Thats our problem right there... hash_int !<= job.target and therefore not submitting... so job.target is not right im guessing
