@@ -56,7 +56,7 @@ class ShareManagerInterface(object):
     
     def on_submit_block(self, is_accepted, worker_name, block_header, block_hash, timestamp):
         log.info("Block %s %s" % (block_hash, 'ACCEPTED' if is_accepted else 'REJECTED'))
-	con = mbd.connect('localhost', '<username>', '<password>', '<db name>');
+	con = mdb.connect('localhost', '<username>', '<password>', '<db name>');
 	cur = con.cursor()
 	try:
 		cur.execute("""UPDATE shares SET upstream_result = "%s" WHERE block_hash = "%s" """ % ('Y' if is_accepted else 'N', block_hash))
