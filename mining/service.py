@@ -54,7 +54,7 @@ class MiningService(GenericService):
         extranonce2_size = Interfaces.template_registry.extranonce2_size
         extranonce1_hex = binascii.hexlify(extranonce1)
         
-        log.debug('Subscribe() args: ' + args)
+        #log.debug('Subscribe() args: ' + args)
          
         session = self.connection_ref().get_session()
         session['extranonce1'] = extranonce1
