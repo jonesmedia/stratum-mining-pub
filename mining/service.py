@@ -46,7 +46,7 @@ class MiningService(GenericService):
                 del session['authorized'][worker_name]
             return False
         
-    def subscribe(self):
+    def subscribe(self, *args):
         '''Subscribe for receiving mining jobs. This will
         return subscription details, extranonce1_hex and extranonce2_size'''
         
@@ -54,6 +54,8 @@ class MiningService(GenericService):
         extranonce2_size = Interfaces.template_registry.extranonce2_size
         extranonce1_hex = binascii.hexlify(extranonce1)
         
+        log.debug('Subscribe() args: ' + args)
+         
         session = self.connection_ref().get_session()
         session['extranonce1'] = extranonce1
         session['difficulty'] = 1 # Following protocol specs, default diff is 1
@@ -118,7 +120,11 @@ class MiningService(GenericService):
                         worker_name, block_header, block_hash, submit_time)
 
         return True
-            
+
+    def get_transactions(self, *args):
+        log.debug("get_transactions() args: " + str(tuple(args)))
+        return
+
     # Service documentation for remote discovery
     update_block.help_text = "Notify Stratum server about new block on the network."
     update_block.params = [('password', 'string', 'Administrator password'),]
