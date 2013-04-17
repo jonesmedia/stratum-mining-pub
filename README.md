@@ -34,6 +34,11 @@ http://pastebin.com/Jk2wZ9a6
 To get extra information, I have changed 'hash_int <= job.target'  to 'hash_int >= job.target'
 
 
+git clone https://github.com/Tydus/litecoin_scrypt.git
+cd litecoin_scrypt
+sudo python setup.py install
+
+
 Contact:
 -------
 This pool implementation is provided by http://www.viperausmedia.com.au. You can contact
