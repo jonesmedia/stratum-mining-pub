@@ -59,7 +59,7 @@ class ShareManagerInterface(object):
 	con = mdb.connect('localhost', '<username>', '<password>', '<db name>');
 	cur = con.cursor()
 	try:
-		cur.execute("""UPDATE shares SET upstream_result = "%s" WHERE block_hash = "%s" """ % ('Y' if is_accepted else 'N', block_hash))
+		cur.execute("""UPDATE shares SET upstream_result = "%s" WHERE solution = "%s" """ % ('Y' if is_accepted else 'N', block_hash))
 		con.commit()
 	except:
 		con.rollback()
