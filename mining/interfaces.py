@@ -47,7 +47,7 @@ class ShareManagerInterface(object):
 	con = mdb.connect('localhost', '<username>', '<password>', '<db name>');
 	cur = con.cursor()
 	try:
-		cur.execute("""INSERT INTO shares (username, our_result, rem_host, solution, block_header) VALUES ("%s","%s", " ", "%s", "%s")""" % (worker_name, 'Y' if is_valid else 'N', block_hash, block_header))
+		cur.execute("""INSERT INTO shares (username, our_result, rem_host, solution) VALUES ("%s","%s", " ", "%s")""" % (worker_name, 'Y' if is_valid else 'N', block_hash))
 		con.commit()
 	except:
 		con.rollback()
