@@ -23,7 +23,7 @@ LOGLEVEL = 'DEBUG'
 # How many threads use for synchronous methods (services).
 # 30 is enough for small installation, for real usage
 # it should be slightly more, say 100-300.
-THREAD_POOL_SIZE = 200
+THREAD_POOL_SIZE = 300
 
 
 #Not sure what this is.. lol
@@ -63,13 +63,18 @@ ADMIN_PASSWORD_SHA256 = None
 
 IRC_NICK = None
 
-#Insert MYSQL connection details
+# MYSQL connection details
 
-#DATABASE_DRIVER = 'MySQLdb'
-#DATABASE_HOST = 'localhost'
-#DATABASE_DBNAME = 'pooldb'
-#DATABASE_USER = 'dbuser'
-#DATABASE_PASSWORD = '**empty**'
+DATABASE_HOST = ''
+DATABASE_DBNAME = ''
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+
+# Memcache server host and port
+MEMCACHE_HOST = 'localhost:11211'
+
+# Memcache authorization timeout - in seconds
+MEMC_AUTH_TIMEOUT = 900
 
 
 # Pool related settings
