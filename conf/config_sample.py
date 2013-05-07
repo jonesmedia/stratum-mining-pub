@@ -6,26 +6,30 @@ Please rename it to settings.py and fill correct values.
 # ******************** GENERAL SETTINGS ***************
 
 # Enable some verbose debug (logging requests and responses).
-DEBUG = False
+# Turn this off once ready to go live  -  True|False
+DEBUG = True
 
 # Destination for application logs, files rotated once per day.
+# log in current directory - ensure log directory exists
 LOGDIR = 'log/'
 
 # Main application log file.
-LOGFILE = None#'stratum.log'
+LOGFILE = 'stratum.log'
 
 # Possible values: DEBUG, INFO, WARNING, ERROR, CRITICAL
-LOGLEVEL = 'INFO'
+# Turn this to INFO once ready to go live
+LOGLEVEL = 'DEBUG'
 
 # How many threads use for synchronous methods (services).
 # 30 is enough for small installation, for real usage
 # it should be slightly more, say 100-300.
-THREAD_POOL_SIZE = 10
+THREAD_POOL_SIZE = 300
 
+
+#Not sure what this is.. lol
 ENABLE_EXAMPLE_SERVICE = True
 
 # ******************** TRANSPORTS *********************
-
 # Hostname or external IP to expose
 HOSTNAME = 'localhost'
 
@@ -46,10 +50,11 @@ LISTEN_WSS_TRANSPORT = None
 
 # Hostname and credentials for one trusted Bitcoin node ("Satoshi's client").
 # Stratum uses both P2P port (which is 8333 already) and RPC port
-BITCOIN_TRUSTED_HOST = 'localhost'
-BITCOIN_TRUSTED_PORT = 8332
-BITCOIN_TRUSTED_USER = 'user'
-BITCOIN_TRUSTED_PASSWORD = 'somepassword'
+#update this information - user/password from ~/.litecoin/litecoin.conf
+LITECOIN_TRUSTED_HOST = 'localhost'
+LITECOIN_TRUSTED_PORT = 8332
+LITECOIN_TRUSTED_USER = 'user'
+LITECOIN_TRUSTED_PASSWORD = 'somepassword'
 
 # Use "echo -n '<yourpassword>' | sha256sum | cut -f1 -d' ' "
 # for calculating SHA256 of your preferred password
@@ -58,17 +63,25 @@ ADMIN_PASSWORD_SHA256 = None
 
 IRC_NICK = None
 
-'''
-DATABASE_DRIVER = 'MySQLdb'
-DATABASE_HOST = 'localhost'
-DATABASE_DBNAME = 'pooldb'
-DATABASE_USER = 'pooldb'
-DATABASE_PASSWORD = '**empty**'
-'''
+# MYSQL connection details
+
+DATABASE_HOST = ''
+DATABASE_DBNAME = ''
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+
+# Memcache server host and port
+MEMCACHE_HOST = 'localhost:11211'
+
+# Memcache authorization timeout - in seconds
+MEMC_AUTH_TIMEOUT = 900
+
 
 # Pool related settings
+# to get central_wallet address: bitcoind/litecoind getaccountaddress ""
+
 INSTANCE_ID = 31
-CENTRAL_WALLET = 'set_valid_addresss_in_config!'
+CENTRAL_WALLET = 'Your_Valid_Bitcoin_or_Litecoin_Address'
 PREVHASH_REFRESH_INTERVAL = 5 # in sec
 MERKLE_REFRESH_INTERVAL = 60 # How often check memorypool
 COINBASE_EXTRAS = '/stratum/'

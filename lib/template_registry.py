@@ -2,6 +2,7 @@ import weakref
 import binascii
 import util
 import StringIO
+import ltc_scrypt
 
 from twisted.internet import defer
 from lib.exceptions import SubmitException
@@ -137,7 +138,11 @@ class TemplateRegistry(object):
     
     def diff_to_target(self, difficulty):
         '''Converts difficulty to target'''
-        diff1 = 0x00000000ffff0000000000000000000000000000000000000000000000000000 
+        '''diff1 = 0x00000000ffff0000000000000000000000000000000000000000000000000000'''
+        '''I need help here - is this correct? - please see reference'''
+        '''     https://bitcointalk.org/index.php?topic=27970.0      '''
+        #diff1 = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0f0000
+        diff1 = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000
         return diff1 / difficulty
     
     def get_job(self, job_id):
@@ -219,11 +224,14 @@ class TemplateRegistry(object):
         header_bin = job.serialize_header(merkle_root_int, ntime_bin, nonce_bin)
     
         # 4. Reverse header and compare it with target of the user
-        hash_bin = util.doublesha(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
+        #hash_bin = util.doublesha(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
+        hash_bin = ltc_scrypt.getPoWHash(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
         hash_int = util.uint256_from_str(hash_bin)
         block_hash_hex = "%064x" % hash_int
         header_hex = binascii.hexlify(header_bin)
-                 
+        
+        header_hex = header_hex+"000000800000000000000000000000000000000000000000000000000000000000000000000000000000000080020000"
+         
         target_user = self.diff_to_target(difficulty)        
         if hash_int > target_user:
             raise SubmitException("Share is above target")
@@ -233,6 +241,11 @@ class TemplateRegistry(object):
         if hash_int <= target_info:
             log.info("Yay, share with diff above 100000")
 
+        
+        log.info("target_info: %s" % target_info)
+        log.info("hash_int: %s " % hash_int)
+        log.info("job.target: %s " % job.target)
+	
         # 5. Compare hash with target of the network        
         if hash_int <= job.target:
             # Yay! It is block candidate! 

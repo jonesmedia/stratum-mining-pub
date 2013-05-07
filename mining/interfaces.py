@@ -3,11 +3,14 @@
    and customize references to interface instances in your launcher.
    (see launcher_demo.tac for an example).
 ''' 
-
+import MySQLdb as mdb
+import sys
 import time
 from twisted.internet import reactor, defer
-
+import MySQLdb.cursors
 import stratum.logger
+import memcache
+from stratum import settings
 log = stratum.logger.get_logger('interfaces')
 
 class WorkerManagerInterface(object):
@@ -17,7 +20,37 @@ class WorkerManagerInterface(object):
         self.on_load.callback(True)
         
     def authorize(self, worker_name, worker_password):
-        return True
+        isauth = False
+        mc = memcache.Client([settings.MEMCACHE_HOST], debug=1)
+        cachedauth = False
+	
+        try:
+            memkey = "%s-%s" % (str(worker_name), str(worker_password))
+            cachedauth = mc.get(memkey)
+        except:
+            log.info("memcache set exception for %s" % (worker_name))
+
+        if cachedauth == True:
+            isauth = True
+        else:
+            con = mdb.connect(settings.DATABASE_HOST, settings.DATABASE_USER, settings.DATABASE_PASSWORD, settings.DATABASE_DBNAME);
+            cur = con.cursor()
+            try:
+                numrows = cur.execute("SELECT * FROM pool_worker WHERE username = %s AND password = %s", (worker_name, worker_password))
+                if numrows > 0:
+                    isauth = True
+            except:
+                log.info("mysql exception on select for %s" % (worker_name))
+            cur.close()
+            con.close()
+
+        try:
+            memkey = "%s-%s" % (str(worker_name), str(worker_password))
+            mc.set(memkey, isauth, settings.MEMC_AUTH_TIMEOUT)
+        except:
+            log.info("memcache set exception for %s" % (worker_name))
+
+        return isauth
 
 class ShareLimiterInterface(object):
     '''Implement difficulty adjustments here'''
@@ -43,9 +76,28 @@ class ShareManagerInterface(object):
     
     def on_submit_share(self, worker_name, block_header, block_hash, shares, timestamp, is_valid):
         log.info("%s %s %s" % (block_hash, 'valid' if is_valid else 'INVALID', worker_name))
+        con = mdb.connect(settings.DATABASE_HOST, settings.DATABASE_USER, settings.DATABASE_PASSWORD, settings.DATABASE_DBNAME);
+        cur = con.cursor()
+        try:
+            cur.execute("""INSERT INTO shares (username, our_result, rem_host, solution) VALUES ("%s","%s", "", "%s")""" % (worker_name, 'Y' if is_valid else 'N', block_hash))
+            con.commit()
+        except:
+            log.info("mysql exception %s" % (worker_name))
+            con.rollback()
+        cur.close()
+        con.close()
     
     def on_submit_block(self, is_accepted, worker_name, block_header, block_hash, timestamp):
         log.info("Block %s %s" % (block_hash, 'ACCEPTED' if is_accepted else 'REJECTED'))
+        con = mdb.connect(settings.DATABASE_HOST, settings.DATABASE_USER, settings.DATABASE_PASSWORD, settings.DATABASE_DBNAME);
+        cur = con.cursor()
+        try:
+            cur.execute("""UPDATE shares SET upstream_result = "%s" WHERE solution = "%s" """ % ('Y' if is_accepted else 'N', block_hash))
+            con.commit()
+        except:
+            con.rollback()
+        cur.close()
+        con.close()
     
 class TimestamperInterface(object):
     '''This is the only source for current time in the application.

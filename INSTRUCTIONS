@@ -1,0 +1,46 @@
+Installation Instructions - WORK IN PROGRESS
+
+Requirements:
+python 2.6 or 2.7
+litecoind
+linux-based system (should work on Mac OS too, not tested)
+
+#Ensure litecoind is installed and running
+litecoind getinfo {for example}
+
+#create installation directory
+mkdir /home/{USERNAME}/slush0
+cd ~/slush0
+
+
+#Not sure if this part is required...
+#a) From GIT, for developers
+git clone git://github.com/slush0/stratum.git 
+sudo apt-get install python-dev
+sudo python setup.py develop
+
+#Pretty sure you do this...
+#b) From package, permanent install for production use
+sudo apt-get install python-dev
+sudo apt-get install python-setuptools
+sudo easy_install stratum
+
+#Do this 
+git clone git://github.com/viperaus/stratum-mining.git
+
+#TO DO - Incorporate msyql connection data from config. Currently not implimented
+#Edit lines 47 and 69 in mining/interfaces.py - update db information
+
+#Difficulty is set to 16 - currently unconfirmed
+#use your favorite editor
+cp stratum-mining/conf/config_sample.py stratum-mining/conf/config.py
+nano stratum-mining/conf/config.py
+
+
+Startup
+=======
+Start devel server:
+twistd -ny launcher_demo.tac
+
+Devel server *with* lowlevel messages of Twisted:
+twistd -ny launcher_demo.tac -l log/twistd.log

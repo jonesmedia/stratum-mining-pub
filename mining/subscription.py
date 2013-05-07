@@ -37,8 +37,9 @@ class MiningSubscription(Subscription):
             return result
         
         # Force set higher difficulty
-        # TODO
-        #self.connection_ref().rpc('mining.set_difficulty', [2,], is_notification=True)
+        # change this (default "16") to alter your share difficulty. 
+        # Setting to "1" will produce difficulty 1 shares, default is difficulty "16".
+        self.connection_ref().rpc('mining.set_difficulty', [16,], is_notification=True)
         #self.connection_ref().rpc('client.get_version', [])
         
         # Force client to remove previous jobs if any (eg. from previous connection)
